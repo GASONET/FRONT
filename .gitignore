@@ -1,0 +1,9 @@
+/node_modules
+/build
+/dist
+.vscode
+node_modules/
+**/node_modules
+
+node_modules
+**node_modules
