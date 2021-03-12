@@ -25,12 +25,15 @@ class FormsValidation extends React.Component  {
             number: "",
             name: "",
             expiry: "",
+            year: "",
+            month: "",
             cvc: "",
             issuer: "",
             focused: "",
             fclearInputOnReset:false,
             submitting: false,
         };
+        this.format_expiry = "";
         this.formRef = React.createRef();
         this.franquicia = {
             mastercard : '1',
@@ -44,6 +47,8 @@ class FormsValidation extends React.Component  {
     getInputRef(){
         return this.inputRef.current.inputElement;
     }
+
+   
 
 
 
@@ -60,10 +65,22 @@ class FormsValidation extends React.Component  {
     };
 
     handleChange = (e) => {
+        
         if (e.target.name === "number") {
             e.target.value = formatCreditCardNumber(e.target.value);
-          } else if (e.target.name === "expiry") {
-            e.target.value = formatExpirationDate(e.target.value);
+          } else if (e.target.name === "year") {
+            //this.format_expiry = [this.format_expiry.slice(0, 0), e.target.value, this.format_expiry.slice(0)].join('');
+            this.format_expiry = e.target.value
+            this.format_expiry = formatExpirationDate(this.format_expiry);
+            //console.log(this.format_expiry)
+            this.setState({expiry:this.format_expiry});
+            
+          }  else if (e.target.name === "month") {
+            this.format_expiry = [this.format_expiry.slice(0, 2), e.target.value, this.format_expiry.slice(0)].join('');
+            this.format_expiry = formatExpirationDate(this.format_expiry);
+            this.setState({expiry:this.format_expiry});
+            //console.log(this.format_expiry)
+        
           } else if (e.target.name === "cvc") {
             e.target.value = formatCVC(e.target.value);
           }
@@ -120,21 +137,21 @@ class FormsValidation extends React.Component  {
                 let data = response.data
                 if(data.code == '00'){
                     alert('Medio de Pago Creado con Exito!')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 else if(data.code == '03')
                 {   
                     alert('Error Authenticacion')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 else if(data.code == '05'){
                   
                     alert('No tiene Medios de Pago Registrados')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 else if(data.code == '09'){
                     alert('Registro No valido')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 this.resetForm();
                 
@@ -200,13 +217,13 @@ class FormsValidation extends React.Component  {
                                     <Form.Row className="justify-content-md-center">
 
                                     <Form.Group as={Col} md="6">
-                                            <Form.Label htmlFor="number"></Form.Label>
+                                            <Form.Label htmlFor="number"> Número de Tarjeta</Form.Label>
                                             <TextInput
                                                 name="number"
                                                 type="tel"
                                                 id="number"
                                                 pattern="[\d| ]{16,22}"
-                                                placeholder="Card Number"
+                                                placeholder="xxxx xxxx xxxx xxxx"
                                                 onChange={this.handleChange}
                                                 onFocus={this.handleInputFocus}
                                                 autoComplete="off"
@@ -237,17 +254,32 @@ class FormsValidation extends React.Component  {
                                     */
     }
                                     <Form.Row className="justify-content-md-center">
-                                    <Form.Group as={Col} md="4">
-                                            <Form.Label htmlFor="expiry"></Form.Label>
+                                    <Form.Group as={Col} md="3">
+                                            <Form.Label htmlFor="expiry"> Año de Vencimiento</Form.Label>
                                             <TextInput
-                                                name="expiry"
+                                                name="year"
                                                 type="tel"
-                                                id="expiry"
-                                                pattern="\d\d/\d\d"
-                                                placeholder="yy/mm"
+                                                id="year"
+                                                pattern="[\d| ]{2}"
+                                                placeholder="yy"
                                                 onFocus={this.handleInputFocus}
                                                 onChange={this.handleChange}
-                                                value={this.state.expiry}
+                                                value={this.state.year}
+                                                autoComplete="off"
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group as={Col} md="3">
+                                            <Form.Label htmlFor="expiry"> Mes Vencimiento </Form.Label>
+                                            <TextInput
+                                                name="month"
+                                                type="tel"
+                                                id="expiry"
+                                                pattern="[\d| ]{2}"
+                                                placeholder="mm"
+                                                onFocus={this.handleInputFocus}
+                                                onChange={this.handleChange}
+                                                value={this.state.month}
                                                 autoComplete="off"
                                                 required
                                             />

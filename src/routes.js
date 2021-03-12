@@ -11,6 +11,7 @@ const UpdateCard = React.lazy(() => import('./Pages/Dashboard/updateCard'));
 const Logout = React.lazy(() => import('./Pages/Dashboard/logout'));
 
 
+
 const routes = [
     { path: '/dashboard', exact: true, name: 'Dashboard', component: Dashboard },
     { path: '/createCard', exact: true, name: 'CreateCard', component: CreateCard },

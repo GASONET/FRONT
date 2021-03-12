@@ -8,8 +8,9 @@ const Logout = ()=> {
        localStorage.removeItem('jwk');
        localStorage.removeItem('user');
        localStorage.removeItem('authorization');
+       localStorage.removeItem('authenticated');
        return(
-           <Redirect to='/'/>
+           <Redirect to='/login'/>
        )
     
 }

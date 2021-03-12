@@ -13,6 +13,8 @@ import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
 
 import './app.scss';
+import GuardedRoute from '../../../hoc/_Aux/GuardedRoute';
+import isAuthenticated from '../../../hoc/_Aux/authenticated';
 
 class AdminLayout extends Component {
 
@@ -49,9 +51,13 @@ class AdminLayout extends Component {
                     path={route.path}
                     exact={route.exact}
                     name={route.name}
-                    render={props => (
-                        <route.component {...props} />
-                    )} />
+                    render={props => 
+                    isAuthenticated ?(   
+                    <route.component {...props} />   
+                    ):
+                    (<Redirect to={{pathname:'/login'}}></Redirect>)
+                
+                } />
             ) : (null);
         });
         

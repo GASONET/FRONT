@@ -1,7 +1,7 @@
 export default {
-    authURL: 'http://localhost:5000',
-    backURL: 'http://localhost:3000',
+//authURL: 'https://1c8655fc2375.ngrok.io',
+//backURL: 'https://d0bfe8645a10.ngrok.io',
     
-    // authURL: 'https://d8db4b3c9cd5.ngrok.io',
-    // backURL: 'https://6b1a7a763ffb.ngrok.io',
+    authURL: 'http://ec2-3-20-205-154.us-east-2.compute.amazonaws.com:5000',
+    backURL: 'http://ec2-3-20-205-154.us-east-2.compute.amazonaws.com:3000',
 }

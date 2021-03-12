@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink , Redirect} from 'react-router-dom';
 
 import './../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
@@ -88,8 +88,9 @@ class SignIn extends React.Component {
                     const user = response.data.user
                     localStorage.setItem('authorization', JSON.stringify(response.data.authorization).replace(/["']/g, ""))
                     localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('authenticated', true);
                     this.setState({submitting: false})
-                    this.props.history.push(`/dashboard/`, { user });
+                    this.props.history.push('/dashboard');
                 }
             })
             .catch(err => {
@@ -107,7 +108,7 @@ class SignIn extends React.Component {
 
         if (localStorage.getItem('user')) {
             let user = localStorage.getItem('user');
-            this.props.history.push(`/dashboard`, { user })
+            this.props.history.push('/dashboard')
         }
     }
 
@@ -135,10 +136,10 @@ class SignIn extends React.Component {
                                                 name="username"
                                                 id="username"
                                                 placeholder="Usuario"
-                                                minLength="4"
+                                                minLength="1"
                                                 required
                                                 value={this.state.username}
-                                                errorMessage={{ required: "Usuario es requerido", minLength: "Minimo 4 caracteres" }}
+                                                errorMessage={{ required: "Usuario es requerido", minLength: "Minimo 1 caracteres" }}
                                                 onChange={this.handleChange}
                                                 autoComplete="off"
                                             />
@@ -152,8 +153,8 @@ class SignIn extends React.Component {
                                                 type="password"
                                                 placeholder="Password"
                                                 required
-                                                minLength="6"
-                                                errorMessage={{ required: "Password es requerido", minLength: "Minimo 6 caracteres" }}
+                                                minLength="1"
+                                                errorMessage={{ required: "Password es requerido", minLength: "Minimo 1 caracteres" }}
                                                 value={this.state.password}
                                                 onChange={this.handleChange}
                                                 autoComplete="off"

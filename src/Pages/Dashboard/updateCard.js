@@ -62,8 +62,19 @@ class FormsValidation extends React.Component  {
     handleChange = (e) => {
         if (e.target.name === "number") {
             e.target.value = formatCreditCardNumber(e.target.value);
-          } else if (e.target.name === "expiry") {
-            e.target.value = formatExpirationDate(e.target.value);
+          } else if (e.target.name === "year") {
+            //this.format_expiry = [this.format_expiry.slice(0, 0), e.target.value, this.format_expiry.slice(0)].join('');
+            this.format_expiry = e.target.value
+            this.format_expiry = formatExpirationDate(this.format_expiry);
+            //console.log(this.format_expiry)
+            this.setState({expiry:this.format_expiry});
+            
+          }  else if (e.target.name === "month") {
+            this.format_expiry = [this.format_expiry.slice(0, 2), e.target.value, this.format_expiry.slice(0)].join('');
+            this.format_expiry = formatExpirationDate(this.format_expiry);
+            this.setState({expiry:this.format_expiry});
+            //console.log(this.format_expiry)
+        
           } else if (e.target.name === "cvc") {
             e.target.value = formatCVC(e.target.value);
           }
@@ -116,22 +127,22 @@ class FormsValidation extends React.Component  {
                
                 let data = response.data
                 if(data.code == '00'){
-                    alert('Medio de Pago Creado con Exito!')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    alert('Medio de Pago Actualizado con Exito!')
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 else if(data.code == '03')
                 {   
                     alert('Error Authenticacion')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 else if(data.code == '05'){
                   
                     alert('No tiene Medios de Pago Registrados')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 else if(data.code == '09'){
                     alert('Registro No valido')
-                    this.setState({submitting: false , number:"", expiry:""})
+                    this.setState({submitting: false , number:"", expiry:"", year:"", month:""})
                 }
                 this.resetForm();
                 
@@ -194,82 +205,97 @@ class FormsValidation extends React.Component  {
                             />
 
                             <ValidationForm ref={this.formRef} onSubmit={this.handleSubmit} onErrorSubmit={this.handleErrorSubmit}>
-                                    <Form.Row className="justify-content-md-center">
+                            <Form.Row className="justify-content-md-center">
 
-                                    <Form.Group as={Col} md="6">
-                                            <Form.Label htmlFor="number"></Form.Label>
-                                            <TextInput
-                                                name="number"
-                                                type="tel"
-                                                id="number"
-                                                pattern="[\d| ]{16,22}"
-                                                placeholder="Card Number"
-                                                onChange={this.handleChange}
-                                                onFocus={this.handleInputFocus}
-                                                value={this.state.number}
-                                                autoComplete="off"
-                                                required
-                                            />
-                                        </Form.Group>
-                                    </Form.Row>
-                                { /*
-                                    <Form.Row className="justify-content-md-center">
-                                    <Form.Group as={Col} md="6">
-                                            <Form.Label htmlFor="name"></Form.Label>
-                                            <TextInput
-                                                name="name"
-                                                type="text"
-                                                id="name"
-                                                placeholder="Name"
-                                                onChange={this.handleChange}
-                                                onFocus={this.handleInputFocus}
-                                                autoComplete="off"
-                                                required
-                                            />
-                                        </Form.Group>
-                                
-                               
+                            <Form.Group as={Col} md="6">
+                                    <Form.Label htmlFor="number"> Número de Tarjeta</Form.Label>
+                                    <TextInput
+                                        name="number"
+                                        type="tel"
+                                        id="number"
+                                        pattern="[\d| ]{16,22}"
+                                        placeholder="xxxx xxxx xxxx xxxx"
+                                        onChange={this.handleChange}
+                                        onFocus={this.handleInputFocus}
+                                        autoComplete="off"
+                                        value={this.state.number}
+                                        required
+                                    />
+                                </Form.Group>
+                            </Form.Row>
+                            { /*
+                            <Form.Row className="justify-content-md-center">
+                            <Form.Group as={Col} md="6">
+                                    <Form.Label htmlFor="name"></Form.Label>
+                                    <TextInput
+                                        name="name"
+                                        type="text"
+                                        id="name"
+                                        placeholder="Name"
+                                        onChange={this.handleChange}
+                                        onFocus={this.handleInputFocus}
+                                        autoComplete="off"
+                                        required
+                                    />
+                                </Form.Group>
 
-                                    </Form.Row>
-                                    */
-    }
-                                    <Form.Row className="justify-content-md-center">
-                                    <Form.Group as={Col} md="4">
-                                            <Form.Label htmlFor="expiry"></Form.Label>
-                                            <TextInput
-                                                name="expiry"
-                                                type="tel"
-                                                id="expiry"
-                                                pattern="\d\d/\d\d"
-                                                placeholder="Valid Thru"
-                                                onFocus={this.handleInputFocus}
-                                                onChange={this.handleChange}
-                                                value={this.state.expiry}
-                                                autoComplete="off"
-                                                required
-                                            />
-                                        </Form.Group>
 
-                                    {
-                                        /*
-                                        <Form.Group as={Col} md="2">
-                                            <Form.Label htmlFor="cvv"></Form.Label>
-                                            <TextInput
-                                                name="cvc"
-                                                type="tel"
-                                                id="cvc"
-                                                pattern="\d{3,4}"
-                                                placeholder="CVC"
-                                                onFocus={this.handleInputFocus}
-                                                onChange={this.handleChange}
-                                                autoComplete="off"
-                                            />
-                                        </Form.Group>
-                                
-                               */
-                                    }
 
-                                    </Form.Row>
+                            </Form.Row>
+                            */
+                            }
+                            <Form.Row className="justify-content-md-center">
+                            <Form.Group as={Col} md="3">
+                                    <Form.Label htmlFor="expiry"> Año de Vencimiento</Form.Label>
+                                    <TextInput
+                                        name="year"
+                                        type="tel"
+                                        id="year"
+                                        pattern="[\d|]{2}"
+                                        placeholder="yy"
+                                        onFocus={this.handleInputFocus}
+                                        onChange={this.handleChange}
+                                        value={this.state.year}
+                                        autoComplete="off"
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group as={Col} md="3">
+                                    <Form.Label htmlFor="expiry"> Mes Vencimiento </Form.Label>
+                                    <TextInput
+                                        name="month"
+                                        type="tel"
+                                        id="expiry"
+                                        pattern="[\d|]{2}"
+                                        placeholder="mm"
+                                        onFocus={this.handleInputFocus}
+                                        onChange={this.handleChange}
+                                        value={this.state.month}
+                                        autoComplete="off"
+                                        required
+                                    />
+                                </Form.Group>
+
+                            {
+                                /*
+                                <Form.Group as={Col} md="2">
+                                    <Form.Label htmlFor="cvv"></Form.Label>
+                                    <TextInput
+                                        name="cvc"
+                                        type="tel"
+                                        id="cvc"
+                                        pattern="\d{3,4}"
+                                        placeholder="CVC"
+                                        onFocus={this.handleInputFocus}
+                                        onChange={this.handleChange}
+                                        autoComplete="off"
+                                    />
+                                </Form.Group>
+
+                            */
+                            }
+
+                            </Form.Row>
 
                                     <Form.Row className="justify-content-md-center">
                                     <Form.Group md={12}  className="mt-3">

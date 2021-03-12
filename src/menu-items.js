@@ -8,7 +8,7 @@ export default {
             children: [
                 {
                     id: 'Home',
-                    title: 'Información',
+                    title: 'Medios de Pago',
                     type: 'item',
                     url: '/dashboard',
                     classes: 'nav-item',

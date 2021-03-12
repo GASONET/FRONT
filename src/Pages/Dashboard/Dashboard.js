@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col, Card, Table} from 'react-bootstrap';
-
+import {Link} from "react-router-dom";
 import Aux from "../../hoc/_Aux";
 import DEMO from "../../store/constant";
 
@@ -13,6 +13,7 @@ import dinners from '../../assets/images/widget/diners-logo.png';
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
+import truck  from '../../assets/images/user/oil-truck.png';
 
 import { getMedioPago } from './../../api/getMedio';
 
@@ -27,8 +28,15 @@ class Dashboard extends React.Component {
             tarjetas: [],
         };
         this.tipodocumento = {
-            1: "Cedula Ciudadania",
-            8: "NIT"
+            1: "Cedula de Ciudadania",
+            2: "Cedula de Extrajenria",
+            3: "NUIP",
+            4: "Pasaporte",
+            5: "Tarjeta de Identidad",
+            6: "Menor sin Identificación",
+            7: "Registro Civil",
+            8: "NIT",
+            8: "Adulto sin Identicacion"
         }
         this.franquicia = {
             '1': mastercard,
@@ -107,10 +115,10 @@ class Dashboard extends React.Component {
         
         let button;
         if(medio){
-            button = <a href="/updateCard"className="btn btn-danger text-uppercase btn-block">Actualizar Tarjeta</a>
+            button = <Link to="/updateCard"className="btn btn-danger text-uppercase btn-block">Actualizar Tarjeta</Link>
         }
         else(
-            button = <a href="/createCard"className="btn btn-danger text-uppercase btn-block">Crear Tarjeta</a>
+            button = <Link to="/createCard"className="btn btn-danger text-uppercase btn-block">Crear Tarjeta</Link>
         )
         return (
             <Aux>
@@ -120,7 +128,7 @@ class Dashboard extends React.Component {
                 <Card>
                             <Card.Body>
                                 <div className="text-center m-b-20">
-                                    <img className="img-fluid rounded-circle" src={avatar2} alt="dashboard-user" />
+                                    <img className="img-fluid rounded-circle" src={truck} alt="dashboard-user" />
                                         <h5 className="mt-3">{user.nombre}</h5>
                                 </div>
                                 <h5 className=" m-b-0">Tipo Documento <span className="float-right">{this.tipodocumento[user.tipoDocumento]}</span></h5>

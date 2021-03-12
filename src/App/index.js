@@ -8,6 +8,7 @@ import Loader from './layout/Loader'
 import Aux from "../hoc/_Aux";
 import ScrollToTop from './layout/ScrollToTop';
 import routes from "./../route";
+import GuardedRoute from "./../hoc/_Aux/GuardedRoute";
 
 
 const AdminLayout = Loadable({
@@ -17,6 +18,8 @@ const AdminLayout = Loadable({
 
 
 class App extends Component {
+
+    
     render() {
         const menu = routes.map((route, index) => {
           return (route.component) ? (
