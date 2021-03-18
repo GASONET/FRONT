@@ -57,7 +57,6 @@ class Dashboard extends React.Component {
       await getMedioPago(this.state.user.numeroContrato)
         .then(result => {
             let response = result.response
-            console.log('en el dashboard ',response)
             if(response.status === 500) {
                 alert('Error de Servidor')
             }
@@ -69,7 +68,7 @@ class Dashboard extends React.Component {
                 
             }
             if(response.status === 200 || response.status === 201) {
-                console.log(response.data);
+                //
                 let data = response.data
                 if(data.code == '00'){
                     this.setState({medio: true, tarjetas: data.medios})

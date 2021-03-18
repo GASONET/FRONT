@@ -113,7 +113,6 @@ class FormsValidation extends React.Component  {
         await createMedio(data)
         .then(result => {
             let response = result.response
-            console.log('en el update ',response)
             if(response.status == 500) {
                 this.setState({submitting: false , number:"", expiry:""})
                 this.resetForm();

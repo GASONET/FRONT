@@ -70,7 +70,6 @@ class SignIn extends React.Component {
         await loginUser(this.state.username, this.state.password)
             .then(result => {
                 let response = result.response
-                console.log('en el login ',response)
                 if(response.status === 500) {
                     alert('Petición erronea')
                     this.setState({submitting: false , username:'', password:''})
@@ -84,7 +83,7 @@ class SignIn extends React.Component {
                     this.setState({submitting: false , username:'', password:''})
                 }
                 if(response.status === 200 || response.status === 201) {
-                    console.log(response.data.authorization);
+                    //console.log(response.data.authorization);
                     const user = response.data.user
                     localStorage.setItem('authorization', JSON.stringify(response.data.authorization).replace(/["']/g, ""))
                     localStorage.setItem('user', JSON.stringify(user));

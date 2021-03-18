@@ -107,7 +107,7 @@ class FormsValidation extends React.Component  {
         await updateMedio(data)
         .then(result => {
             let response = result.response
-            console.log('en el update ',response)
+            //console.log('en el update ',response)
             if(response.status === 500) {
                 alert('Petición erronea')
                 this.resetForm();
